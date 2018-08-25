@@ -1,46 +1,68 @@
+//Define vectors component-wise
+typedef struct vector {
+  double x;
+  double y;
+  double z;
+} vector;
+
 //Rays are determined by their start point and direction vector
-struct ray {
-  double start[3];
-  double dir[3];
-};
+typedef struct ray {
+  vector start;
+  vector dir;
+} ray;
   
 //A disk is determined by its radius, center, and normal vector
-struct disk {
+typedef struct disk {
   double radius;
-  double center[3];
-  double normal[3];
-};
+  vector center;
+  vector normal;
+} disk;
 
 //A open cylinder is determined by its radius, height, the center of its base,
 //and a normal vector to its base
-struct cylinder {
+typedef struct cylinder {
   double radius;
   double height;
-  double center[3];
-  double normal[3];
-};
+  vector center;
+  vector axis;
+} cylinder;
 
 //An open right cone is determined by radius, height, its vertex, and a vector from the vertex normal to the base
-struct cone {
+typedef struct cone {
   double radius;
   double height;
-  double vertex[3];
-  double normal[3];
-};
+  vector vertex;
+  vector axis;
+} cone;
 
-//utility functions
-double dot_product(double *a, double *b);
-void cross_product(double *a, double *b, double *result);
-double distance(double *a, double *b);
-double magnitude(double *a);
-void sum(double *a, double *b, double *result);
-void difference(double *a, double *b, double *result);
-void scaled_sum(double c1, double *a, double c2, double *b, double *result);
-void scaled_difference(double c1, double *a, double c2, double *b, double *result);
-void scalar_product(double c, double *a, double *result);
-void copy_vector(double *a, double *result);
+//a sphere is determined by its center and radius
+typedef struct sphere {
+  double radius;
+  vector center;
+} sphere;
+
+//utility functions: Basic vector operations
+double dot_product(vector a, vector b);
+vector cross_product(vector a, vector b);
+double distance(vector a, vector b);
+double magnitude(vector a);
+vector sum(vector a, vector b);
+vector difference(vector a, vector b);
+vector scaled_sum(double c1, vector a, double c2, vector b);
+vector scaled_difference(double c1, vector a, double c2, vector b);
+vector scalar_product(double c, vector a);
+void copy_vector(vector a, vector *result);
+
+//utility functions: object constructors
+vector new_vector(double x, double y, double z);
+ray new_ray(vector start, vector dir);
+disk new_disk(double radius, vector center, vector normal);
+cylinder new_cylinder(double radius, double height, vector center, vector axis);
+cone new_cone(double radius, double height, vector vertex, vector axis);
+sphere new_sphere(double radius, vector center);
 
 //Object intersections
-int ray_disk_intersection(struct ray observer, struct disk obj, double *intersection);
-int ray_cylinder_intersection(struct ray observer, struct cylinder obj, double *intersection);
-int ray_cone_intersection(struct ray observer, struct cone object, double *intersection);
+int ray_sphere_intersection(ray observer, sphere obj, vector *intersection);
+int ray_disk_intersection(ray observer, disk obj, vector *intersection);
+int ray_cylinder_intersection(ray observer, cylinder obj, vector *intersection);
+int ray_cone_intersection(ray observer, cone object, vector *intersection);
