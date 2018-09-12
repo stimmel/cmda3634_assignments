@@ -1,7 +1,4 @@
-#include "omp.h"
 #include "simpleRayTracer.h"
-
-
 
 // to compile:
 // gcc -O3 -o simpleRayTracer *.c -I.  -fopenmp -lm
