@@ -1,22 +1,34 @@
 #include "simpleRayTracer.h"
 
 // HW02Q2: complete this function
-bool intersectRayDisk(const ray_t r, const disk_t disk, dfloat *t){
+bool intersectRayDisk(const ray_t r, const disk_t disk, dfloat *pt_t){
 
   vector_t s = r.start;
   vector_t d = r.dir;
   vector_t n = disk.normal;
   vector_t c = disk.center;
 
-  // replace: set (*t)  with actual parameter such that s + (*t)*d intersects the disk
-  *t = 1e9;
+  dfloat t = 1e9;
+  
+  // A. find if there is an intersection between ray and disk
+  //    i.e. exists point p on disk such that p = s+t*d for some t>=0
 
-  // replace: make function return true for intersection, false if no intersection
+  // B. If no intersection return false
+  
+  // C. If there is an intersection then check is t< (*pt_t)
+  //    a. if false: return false
+  //    b. if true: set *pt_t = t, and return true
+
+  if(t< (*pt_t)){
+    *pt_t = t;
+    return true;
+  }
+
   return false;
 }
 
 // HW02Q3: complete this function
-bool intersectRayCylinder(const ray_t r, const cylinder_t cylinder, dfloat *t){
+bool intersectRayCylinder(const ray_t r, const cylinder_t cylinder, dfloat *pt_t){
 
   vector_t s = r.start;
   vector_t d = r.dir;
@@ -26,15 +38,28 @@ bool intersectRayCylinder(const ray_t r, const cylinder_t cylinder, dfloat *t){
   dfloat   R = cylinder.radius;
   dfloat   H = cylinder.height;
 
-  // replace: set  (*t) to actual parameter such that s + (*t)*d intersects the cylinder
-  *t = 1e9;
+  dfloat t = 1e9;
+  
+  // A. find if there is an intersection between ray and cylinder
+  //    i.e. exists point p on disk such that p = s+t*d for some t>=0
 
-  // replace: return true for intersection, false if no intersection
+  // B. If no intersection return false
+  
+  // C. If there is an intersection then check is t< (*pt_t)
+  //    a. if false: return false
+  //    b. if true: set *pt_t = t, and return true
+
+  if(t< (*pt_t)){
+    *pt_t = t;
+    return true;
+  }
+
   return false;
+
 }
 
 // HW02Q4: complete this function
-bool intersectRayCone(const ray_t r, const cone_t cone, dfloat *t){
+bool intersectRayCone(const ray_t r, const cone_t cone, dfloat *pt_t){
 
   vector_t s = r.start;
   vector_t d = r.dir;
@@ -44,10 +69,22 @@ bool intersectRayCone(const ray_t r, const cone_t cone, dfloat *t){
   dfloat   R = cone.radius;
   dfloat   H = cone.height;
   
-  // replace: set (*t) to actual parameter such that s + (*t)*d intersects the cylinder
-  *t = 1e9;
+  dfloat t = 1e9;
+  
+  // A. find if there is an intersection between ray and cylinder
+  //    i.e. exists point p on disk such that p = s+t*d for some t>=0
 
-  // replace: return true for intersection, false if no intersection
+  // B. If no intersection return false
+  
+  // C. If there is an intersection then check is t< (*pt_t)
+  //    a. if false: return false
+  //    b. if true: set *pt_t = t, and return true
+
+  if(t< (*pt_t)){
+    *pt_t = t;
+    return true;
+  }
+
   return false;
   
 }
