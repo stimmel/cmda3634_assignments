@@ -9,25 +9,23 @@ void readPlyModel(const char *fileName, int *Ntriangles, triangle_t **triangles)
 
   char buf[BUFSIZ];
 
-  fgets(buf, BUFSIZ, fp);
-  fgets(buf, BUFSIZ, fp);
-  fgets(buf, BUFSIZ, fp);
-
-  int Nvertices;
-  fscanf(fp, "element vertex %d", &Nvertices);
-  fgets(buf, BUFSIZ, fp);
+  do{
+    fgets(buf, BUFSIZ, fp);
+  }while(!strstr(buf, "element vertex"));
   
-  fgets(buf, BUFSIZ, fp);
-  fgets(buf, BUFSIZ, fp);
-  fgets(buf, BUFSIZ, fp);
-  fgets(buf, BUFSIZ, fp);
-  fgets(buf, BUFSIZ, fp);
+  int Nvertices;
+  sscanf(buf, "element vertex %d", &Nvertices);
 
-  fscanf(fp, "element face %d", Ntriangles);
 
-  fgets(buf, BUFSIZ, fp);
-  fgets(buf, BUFSIZ, fp);
-  fgets(buf, BUFSIZ, fp);
+  do{
+    fgets(buf, BUFSIZ, fp);
+  }while(!strstr(buf, "element face"));
+
+  sscanf(buf, "element face %d", Ntriangles);
+
+  do{
+    fgets(buf, BUFSIZ, fp);
+  }while(!strstr(buf, "end_header"));
 
   dfloat *x = (dfloat*) calloc(Nvertices, sizeof(dfloat));
   dfloat *y = (dfloat*) calloc(Nvertices, sizeof(dfloat));
