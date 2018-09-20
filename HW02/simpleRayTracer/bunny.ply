@@ -9,6 +9,7 @@ property float confidence
 property float intensity
 element face 69451
 property list uchar int vertex_indices
+end_header
 -0.0378297 0.12794 0.00447467 0.850855 0.5 
 -0.0447794 0.128887 0.00190497 0.900159 0.5 
 -0.0680095 0.151244 0.0371953 0.398443 0.5 
