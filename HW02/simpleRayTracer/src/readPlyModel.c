@@ -9,23 +9,47 @@ void readPlyModel(const char *fileName, int *Ntriangles, triangle_t **triangles)
 
   char buf[BUFSIZ];
 
-  do{
-    fgets(buf, BUFSIZ, fp);
-  }while(!strstr(buf, "element vertex"));
-  
   int Nvertices;
+  
+  //check to see if we have end_header
+  //we will later assume all properties come before end_header
+  while (fgets(buf, BUFSIZ, fp) && !strstr(buf,"end_header"));
+
+  if (!strstr(buf,"end_header")) {
+    printf("ply read %s failed: end_header tag not found\n",fileName);
+    printf("aborting execution as input file is not sane\n");
+    exit(1);
+  }
+
+  //look for vertex number
+  rewind(fp);
+
+  while (fgets(buf, BUFSIZ, fp) && !strstr(buf,"element vertex") && !strstr(buf,"end_header"));
+
+  if (strstr(buf,"end_header")) {
+    printf("ply read %s failed: element vertex tag not found\n",fileName);
+    printf("aborting execution as input file is not sane\n");
+    exit(1);
+  } 
+
   sscanf(buf, "element vertex %d", &Nvertices);
 
+  //look for element face number
+  rewind(fp);
 
-  do{
-    fgets(buf, BUFSIZ, fp);
-  }while(!strstr(buf, "element face"));
-
+  while (fgets(buf, BUFSIZ, fp) && !strstr(buf,"element face") && !strstr(buf,"end_header"));
+  
+  if (strstr(buf,"end_header")) {
+    printf("ply read %s failed: element face tag not found\n",fileName);
+    printf("aborting execution as input file is not sane\n");
+    exit(1);
+  } 
+  
   sscanf(buf, "element face %d", Ntriangles);
 
-  do{
-    fgets(buf, BUFSIZ, fp);
-  }while(!strstr(buf, "end_header"));
+  //rewind and scan to end of property tags
+  rewind(fp);
+  while(fgets(buf,BUFSIZ,fp) && !strstr(buf,"end_header"));
 
   dfloat *x = (dfloat*) calloc(Nvertices, sizeof(dfloat));
   dfloat *y = (dfloat*) calloc(Nvertices, sizeof(dfloat));
@@ -36,7 +60,7 @@ void readPlyModel(const char *fileName, int *Ntriangles, triangle_t **triangles)
   printf("buf=%s\n", buf);
   for(int v=0;v<Nvertices;++v){
     fscanf(fp, dfloatString dfloatString dfloatString, x+v, y+v, z+v);
-    fgets(buf, BUFSIZ, fp);
+    fgets(buf,BUFSIZ,fp);
     xmin = min(xmin, x[v]);
     xmax = max(xmax, x[v]);
     ymin = min(ymin, y[v]);
