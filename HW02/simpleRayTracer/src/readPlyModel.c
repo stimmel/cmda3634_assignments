@@ -49,10 +49,12 @@ void readPlyModel(const char *fileName, int *Ntriangles, triangle_t **triangles)
   printf("min/max = %g,%g - %g,%g - %g,%g\n",
 	 xmin,xmax, ymin,ymax, zmin,zmax);
 
+  dfloat maxL = max(max(xmax-xmin, ymax-ymin), zmax-zmin);
+  
   for(int v=0;v<Nvertices;++v){
-    dfloat xv = (x[v]-xmin)/(xmax-xmin);
-    dfloat zv = (y[v]-ymin)/(ymax-ymin);
-    dfloat yv = (z[v]-zmin)/(zmax-zmin);
+    dfloat xv = (x[v]-xmin)/maxL;
+    dfloat zv = (y[v]-ymin)/maxL;
+    dfloat yv = (z[v]-zmin)/maxL;
     x[v] = BOXSIZE/4    + 0.5*BOXSIZE*(1-xv);
     z[v] = 3.*BOXSIZE/4.- 0.5*BOXSIZE*yv;
     y[v] = BOXSIZE      - 0.5*BOXSIZE*zv;
