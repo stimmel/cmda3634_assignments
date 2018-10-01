@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-lm
+CFLAGS=-lm -O3
 DEPS = intersections.h
 OBJ = intersections.o \
       utility.o \
