@@ -3,8 +3,8 @@ HDRDIR  = ./
 
 # set options for this machine
 # specify which compilers to use for c and linking
-CC	= mpiCC
-LD	= mpiCC
+CC	= mpic++
+LD	= mpic++
 
 # compiler flags to be used (set to compile with debugging on)
 CFLAGS = -I$(HDRDIR)  -Ddfloat=double -DdfloatString='"%lg"' -g -O3
