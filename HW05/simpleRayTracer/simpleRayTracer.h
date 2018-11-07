@@ -4,18 +4,16 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include <stdio.h>
 #include <stdbool.h> /* Needed for boolean datatype */
 #include <math.h>
-#include <mpi.h>
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 
-extern int size;
-
 /* Width and height of out image */
-#define SCALE (0.1*size)
+#define SCALE 1
 #define WIDTH  (2048*SCALE)
 #define HEIGHT (1440*SCALE)
 #define DEPTH  (2048*SCALE)

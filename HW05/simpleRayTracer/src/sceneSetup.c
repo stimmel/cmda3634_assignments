@@ -11,10 +11,6 @@
 scene_t *sceneSetup(){
   int i;
 
-  int size;
-
-  MPI_Comm_size(MPI_COMM_WORLD,&size);
-  
   dfloat L = BOXSIZE;
   
   int Nmaterials = 64;

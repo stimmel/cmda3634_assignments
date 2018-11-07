@@ -5,12 +5,8 @@
 
 void readPlyModel(const char *fileName, int *Ntriangles, triangle_t **triangles){
 
-  int size;
-
-  MPI_Comm_size(MPI_COMM_WORLD,&size);
-  
   FILE *fp = fopen(fileName, "r");
-  
+
   char buf[BUFSIZ];
 
   int Nvertices;
